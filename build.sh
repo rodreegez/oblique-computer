@@ -26,6 +26,13 @@ find "$content_dir" -type f  | while read -r file; do
 
   content=$(cat "$file")
 
+  if [[ "$file" != "$content_dir/index.html" ]]; then
+    back_link="<p><a href='./'>Back</a></p>"
+  else
+    back_link=""
+  fi
+
+
   html_boilerplate="<!DOCTYPE html>
 <html lang=\"en\">
 <head>
@@ -34,6 +41,7 @@ find "$content_dir" -type f  | while read -r file; do
 </head>
 <body>
   $content
+  $back_link
 </body>
 </html>"
   echo "$html_boilerplate" > "$output_path/$pagename.html"
