@@ -26,7 +26,7 @@ find "$content_dir" -type f  | while read -r file; do
 
   content=$(cat "$file")
 
-  if [[ "$file" != "$content_dir/index.html" ]]; then
+  if [[ "$pagename" != "index" ]]; then
     back_link="<p><a href='./'>Back</a></p>"
   else
     back_link=""
