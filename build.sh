@@ -37,7 +37,7 @@ find "$content_dir" -type f  | while read -r file; do
 <html lang=\"en\">
 <head>
   <meta charset=\"UTF-8\">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>$pagename</title>
 </head>
 <body>
