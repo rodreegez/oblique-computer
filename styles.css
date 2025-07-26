@@ -1,0 +1,197 @@
+/* Computer-themed styles for oblique.computer */
+
+:root {
+  --green: #00ff00;
+  --dark-green: #008000;
+  --black: #000000;
+  --white: #ffffff;
+  --gray: #333333;
+  --light-gray: #666666;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', Monaco, 'Lucida Console', monospace;
+  background-color: var(--black);
+  color: var(--green);
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image: 
+    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Terminal-like container */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    rgba(0, 255, 0, 0.01) 50%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Scanline effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 255, 0, 0.02) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1 {
+  color: var(--green);
+  border: 2px solid var(--green);
+  padding: 10px 15px;
+  display: inline-block;
+  margin: 0 0 20px 0;
+  background-color: rgba(0, 255, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+h2 {
+  color: var(--green);
+  border-left: 4px solid var(--green);
+  padding-left: 10px;
+  margin: 30px 0 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  margin: 15px 0;
+  text-align: justify;
+}
+
+/* Links */
+a {
+  color: var(--green);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--green);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  background-color: var(--green);
+  color: var(--black);
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-bottom: none;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+a:visited {
+  color: var(--dark-green);
+  border-bottom-color: var(--dark-green);
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+li {
+  margin: 10px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+li:before {
+  content: '> ';
+  color: var(--green);
+  font-weight: bold;
+}
+
+/* Back link styling */
+p:has(a[href="./"]::before) {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+p:has(a[href="./"]) {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 255, 0, 0.3);
+  text-align: right;
+}
+
+/* Terminal cursor animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+h1::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: var(--green);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    background-size: 15px 15px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+    background-image: none;
+  }
+  
+  body::before,
+  body::after {
+    display: none;
+  }
+  
+  h1, h2, a {
+    color: black;
+  }
+  
+  h1::after {
+    display: none;
+  }
+}
