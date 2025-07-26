@@ -35,6 +35,12 @@ find "$content_dir" -type f  | while read -r file; do
     back_link=""
   fi
 
+  # Determine CSS path based on page location
+  if [[ "$file" == "$content_dir/index.html" ]]; then
+    css_path="./styles.css"
+  else
+    css_path="../styles.css"
+  fi
 
   html_boilerplate="<!DOCTYPE html>
 <html lang=\"en\">
@@ -42,7 +48,7 @@ find "$content_dir" -type f  | while read -r file; do
   <meta charset=\"UTF-8\">
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>$pagename</title>
-  <link rel=\"stylesheet\" href=\"/styles.css\">
+  <link rel=\"stylesheet\" href=\"$css_path\">
 </head>
 <body>
   $content
