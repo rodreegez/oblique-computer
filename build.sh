@@ -7,6 +7,9 @@ if [[ ! -d "$build_dir" ]]; then
   mkdir "$build_dir"
 fi
 
+# Copy CSS file to build directory
+cp styles.css "$build_dir/"
+
 find "$content_dir" -type f  | while read -r file; do
   echo "Processing $file"
   if [[ "$file" == "$content_dir/index.html" ]]; then
@@ -32,6 +35,12 @@ find "$content_dir" -type f  | while read -r file; do
     back_link=""
   fi
 
+  # Determine CSS path based on page location
+  if [[ "$file" == "$content_dir/index.html" ]]; then
+    css_path="./styles.css"
+  else
+    css_path="../styles.css"
+  fi
 
   html_boilerplate="<!DOCTYPE html>
 <html lang=\"en\">
@@ -39,6 +48,7 @@ find "$content_dir" -type f  | while read -r file; do
   <meta charset=\"UTF-8\">
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>$pagename</title>
+  <link rel=\"stylesheet\" href=\"$css_path\">
 </head>
 <body>
   $content
