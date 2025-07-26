@@ -32,9 +32,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
+      - name: Make build script executable
+        run: chmod +x ./build.sh
       - name: Build artifact
-        run: bash ./build.sh
+        run: ./build.sh
+      - name: Validate build
+        run: |
+          if [ ! -d "build" ]; then
+            echo "Error: build directory not created"
+            exit 1
+          fi
+          if [ ! -f "build/index.html" ]; then
+            echo "Error: build/index.html not found"
+            exit 1
+          fi
+          echo "Build validation successful"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
