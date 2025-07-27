@@ -12,14 +12,18 @@ The project uses a custom bash-based build system:
 
 - **Build command**: `./build.sh`
 - **Source directory**: `content/` - Contains HTML fragments for individual pages
+- **Source stylesheet**: `styles.css` - Main stylesheet copied to build directory
 - **Output directory**: `build/` - Generated complete HTML files with boilerplate
+
+**IMPORTANT**: The `build/` directory contains generated files and should NEVER be edited directly. All changes must be made to source files in the project root and `content/` directory, then regenerated using `./build.sh`.
 
 The build process:
 1. Creates `build/` directory if it doesn't exist
-2. Processes all files in `content/` 
-3. Wraps content fragments with HTML boilerplate (DOCTYPE, head, body)
-4. Adds navigation (back links for non-index pages)
-5. Generates complete HTML files in appropriate subdirectories
+2. Copies `styles.css` to `build/styles.css`
+3. Processes all files in `content/` 
+4. Wraps content fragments with HTML boilerplate (DOCTYPE, head, body)
+5. Adds navigation (back links for non-index pages)
+6. Generates complete HTML files in appropriate subdirectories
 
 ## Architecture
 
