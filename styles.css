@@ -52,7 +52,7 @@ h2 {
 
 p {
   margin: 15px 0;
-  text-align: justify;
+  text-align: auto;
 }
 
 /* Links */
