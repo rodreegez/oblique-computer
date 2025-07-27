@@ -10,6 +10,69 @@ fi
 # Copy CSS file to build directory
 cp styles.css "$build_dir/"
 
+# Function to convert markdown to HTML using only POSIX tools
+convert_markdown_to_html() {
+  local input="$1"
+  echo "$input" | sed '
+    # Convert headers (must come before paragraph processing)
+    s/^### \(.*\)/<h3>\1<\/h3>/
+    s/^## \(.*\)/<h2>\1<\/h2>/
+    s/^# \(.*\)/<h1>\1<\/h1>/
+    
+    # Convert bold text
+    s/\*\*\([^*]*\)\*\*/<strong>\1<\/strong>/g
+    
+    # Convert italic text (but not already bold)
+    s/\([^*]\)\*\([^*][^*]*\)\*\([^*]\)/\1<em>\2<\/em>\3/g
+    s/^\*\([^*][^*]*\)\*\([^*]\)/<em>\1<\/em>\2/
+    s/\([^*]\)\*\([^*][^*]*\)\*$/<em>\1<\/em>/
+    
+    # Convert inline code
+    s/`\([^`]*\)`/<code>\1<\/code>/g
+    
+    # Convert links [text](url)
+    s/\[\([^]]*\)\](\([^)]*\))/<a href="\2">\1<\/a>/g
+  ' | awk '
+    BEGIN { in_paragraph = 0 }
+    
+    # Empty line - close paragraph if open
+    /^$/ {
+      if (in_paragraph) {
+        print "</p>"
+        in_paragraph = 0
+      }
+      print ""
+      next
+    }
+    
+    # Header tags - close paragraph if open, print header
+    /^<h[1-6]>/ {
+      if (in_paragraph) {
+        print "</p>"
+        in_paragraph = 0
+      }
+      print $0
+      next
+    }
+    
+    # Regular content line
+    {
+      if (!in_paragraph) {
+        printf "<p>"
+        in_paragraph = 1
+      }
+      print $0
+    }
+    
+    # Close final paragraph if open
+    END {
+      if (in_paragraph) {
+        print "</p>"
+      }
+    }
+  '
+}
+
 find "$content_dir" -type f  | while read -r file; do
   echo "Processing $file"
   if [[ "$file" == "$content_dir/index.html" ]]; then
@@ -26,8 +89,17 @@ find "$content_dir" -type f  | while read -r file; do
   echo " filename: $filename"
   pagename=$(basename "$filename")
   echo " pagename: $pagename"
-
-  content=$(cat "$file")
+  
+  # Get file extension
+  extension="${file##*.}"
+  
+  if [[ "$extension" == "md" ]]; then
+    # Convert markdown to HTML
+    content=$(convert_markdown_to_html "$(cat "$file")")
+  else
+    # Assume HTML and read as-is
+    content=$(cat "$file")
+  fi
 
   if [[ "$pagename" != "index" ]]; then
     back_link="<p><a href='./'>Back</a></p>"
