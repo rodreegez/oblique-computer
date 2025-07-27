@@ -7,6 +7,10 @@
   --white: #ffffff;
   --gray: #333333;
   --light-gray: #666666;
+  --text-color: #000000;
+  --bg-color: #ffffff;
+  --accent-color: #333333;
+  --accent-light: #666666;
 }
 
 * {
@@ -15,70 +19,31 @@
 
 body {
   font-family: 'Courier New', Monaco, 'Lucida Console', monospace;
-  background-color: var(--black);
-  color: var(--green);
+  background-color: var(--bg-color);
+  color: var(--text-color);
   margin: 0;
   padding: 20px;
   line-height: 1.6;
   min-height: 100vh;
-  background-image: 
-    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+  max-width: 80ch;
 }
 
-/* Terminal-like container */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    0deg,
-    transparent,
-    rgba(0, 255, 0, 0.01) 50%,
-    transparent
-  );
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Scanline effect */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    transparent 0%,
-    rgba(0, 255, 0, 0.02) 50%,
-    transparent 100%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: -1;
-}
 
 h1 {
-  color: var(--green);
-  border: 2px solid var(--green);
+  color: var(--text-color);
+  border: 2px solid var(--accent-color);
   padding: 10px 15px;
   display: inline-block;
   margin: 0 0 20px 0;
-  background-color: rgba(0, 255, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 h2 {
-  color: var(--green);
-  border-left: 4px solid var(--green);
+  color: var(--text-color);
+  border-left: 4px solid var(--accent-color);
   padding-left: 10px;
   margin: 30px 0 15px 0;
   text-transform: uppercase;
@@ -92,24 +57,23 @@ p {
 
 /* Links */
 a {
-  color: var(--green);
+  color: var(--accent-color);
   text-decoration: none;
-  border-bottom: 1px dotted var(--green);
+  border-bottom: 1px dotted var(--accent-color);
   transition: all 0.3s ease;
 }
 
 a:hover {
-  background-color: var(--green);
-  color: var(--black);
+  background-color: var(--accent-color);
+  color: var(--bg-color);
   padding: 2px 4px;
   margin: -2px -4px;
   border-bottom: none;
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
 }
 
 a:visited {
-  color: var(--dark-green);
-  border-bottom-color: var(--dark-green);
+  color: var(--accent-light);
+  border-bottom-color: var(--accent-light);
 }
 
 /* Lists */
@@ -122,12 +86,12 @@ ul {
 li {
   margin: 10px 0;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 li:before {
   content: '> ';
-  color: var(--green);
+  color: var(--accent-color);
   font-weight: bold;
 }
 
@@ -135,13 +99,13 @@ li:before {
 p:has(a[href="./"]::before) {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid rgba(0, 255, 0, 0.3);
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 p:has(a[href="./"]) {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid rgba(0, 255, 0, 0.3);
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
   text-align: right;
 }
 
@@ -154,7 +118,7 @@ p:has(a[href="./"]) {
 h1::after {
   content: '_';
   animation: blink 1s infinite;
-  color: var(--green);
+  color: var(--accent-color);
 }
 
 /* Responsive design */
